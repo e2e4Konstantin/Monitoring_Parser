@@ -1,0 +1,2 @@
+from parsers.monitoring_material_parser import get_data_material_monitoring
+
