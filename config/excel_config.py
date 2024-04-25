@@ -86,9 +86,9 @@ class ExcelControl:
 
 class SourceData:
     def __init__(
-        self, file_path: str = None, excel_file_name: str = None, sheet_name: str = None
+        self, excel_file: str = None, sheet_name: str = None
     ) -> None:
-        self.file = create_abspath_file(file_path, excel_file_name)
+        self.file = excel_file
         self.sheet_name = sheet_name
         self.df = pandas.DataFrame()
         self.row_max, self.column_max = 0, 0
@@ -140,7 +140,7 @@ class SourceData:
 
     def get_cell_value_by_index(self, row_index: int, column_index: int) -> str:
         """Возвращает строковое значение ячейки."""
-        if 0 <= row_index <= self.row_max and 0 <= column_index < self.column_max:
+        if 0 <= row_index <= self.row_max and 0 <= column_index <= self.column_max:
             value = self.df.iat[row_index, column_index]
             if pandas.isna(value):
                 return ""

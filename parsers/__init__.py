@@ -1,2 +1,3 @@
-from parsers.monitoring_material_parser import get_data_material_monitoring
+from parsers.monitoring_material import monitoring_materials_parse
+from parsers.monitoring_transport_costs import monitoring_transport_costs_parse
 
