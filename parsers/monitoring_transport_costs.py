@@ -46,7 +46,7 @@ def get_df_transport_costs_monitoring(
             raw_value = data.get_cell_value_by_index(row, price_column_number)
             price = get_float(raw_value)
             if price and isinstance(price, float) and price > 0:
-                ic(code, price)
+                # ic(code, price)
                 result.append((code, price))
         else:
             output_message_exit(

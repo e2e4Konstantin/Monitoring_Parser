@@ -64,13 +64,9 @@ def get_df_material_monitoring(excel_file: str, sheet_name: str) -> list[tuple[s
 
 def monitoring_materials_parse(data_place: dict[str:str]) -> int | None:
     """ Разбирает файл мониторинга с ценами на материалы, записывает результат в scv файл. """
-    src_file = create_abspath_file(
-        data_place["data_path"], data_place["materials_file_name"]
-    )
+    src_file = data_place["materials_src_file"]
+    result_csv_file = data_place["material_results_file"]
     #
-    result_csv_file = create_abspath_file(
-        data_place["unload_path"], data_place["materials_result_file_name"]
-    )
     result = get_df_material_monitoring(src_file, data_place["materials_sheet_name"])
     df = pandas.DataFrame(
         result, columns=["code", "supplier_price", "delivery", "title"]

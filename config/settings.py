@@ -62,5 +62,4 @@ monitoring_data_place["material_results_file"] = generate_result_file_name(
 
 if __name__ == "__main__":
     from icecream import ic
-
     ic(monitoring_data_place)
