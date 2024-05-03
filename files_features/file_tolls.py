@@ -46,6 +46,7 @@ def file_exists(path: str) -> bool:
 
 def generate_result_file_name(file_path: str, supplement: int, index: int) -> str:
     """Добавляет к имени файла номер дополнения и индекса."""
-    file_path = pathlib.Path(file_path).resolve()
+    file_path = pathlib.Path(file_path)
+    # file_path = pathlib.Path(file_path).resolve()
     new_name = f"{file_path.stem}_{supplement}_{index}"
     return str(file_path.with_name(new_name).with_suffix(file_path.suffix))

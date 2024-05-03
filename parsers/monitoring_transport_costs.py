@@ -62,9 +62,9 @@ def monitoring_transport_costs_parse(data_place: dict[str:str]) -> int | None:
     Разбирает файл мониторинга с ценами на Транспортные услуги,
     записывает результат в scv файл.
     """
-    src_file = data_place["transport_src_file"]
-    result_csv_file = data_place["transport_results_file"]
-    sheet_name = data_place["transport_sheet_name"]
+    src_file = data_place["file"]
+    result_csv_file = data_place["result_file"]
+    sheet_name = data_place["sheet_name"]
     #
     result = get_df_transport_costs_monitoring(src_file, sheet_name)
     df = pandas.DataFrame(result, columns=["code", "current_price"])

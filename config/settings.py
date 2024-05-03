@@ -1,5 +1,6 @@
 from collections import namedtuple
 from files_features import create_abspath_file, generate_result_file_name
+# from src_files_path import src_transport_data
 
 
 CellPosition = namedtuple(typename="CellPosition", field_names=["row", "column"])
@@ -13,51 +14,83 @@ TRANSPORT_HEADER_HEIGHT = 1
 
 variations_delivery_value = ("с доставкой", "c доставкой")
 
-monitoring_data_place = {
-    "data_path": r"C:\Users\kazak.ke\Documents\Задачи\5_Надя\Мониторинг",
-    "unload_path": r"C:\Users\kazak.ke\Documents\АИС_Выгрузка\Мониторинг",
-    #
-    "materials_file_name": r"Мониторинг_Март_2024_210_71.xlsx",
-    "materials_sheet_name": r"приложение А",
-    "materials_result_file_name": r"materials_monitoring_result.csv",
-    "materials_supplement": 71,
-    "materials_index": 210,
-    #
-    "transport_file_name": r"Раздел_0_Индексы_под загрузку_16.01.2024.xlsx",
-    "transport_sheet_name": r"Лист1",
-    "transport_result_file_name": r"transport_monitoring_result.csv",
-    "transport_supplement": 71,
-    "transport_index": 208,
+src_transport_path = (
+    r"C:\Users\kazak.ke\Documents\Задачи\5_Надя\исходные_данные\транспорт"
+)
+src_material_path = (
+    r"C:\Users\kazak.ke\Documents\Задачи\5_Надя\исходные_данные\материалы"
+)
+unload_path = r"C:\Users\kazak.ke\Documents\АИС_Выгрузка\Мониторинг"
+
+transport_timeline = {
+    "январь_2024": ("Раздел_0_Индексы_под загрузку_16.01.2024.xlsx", 71, 208, "Лист1"),
+    "февраль_2024": ("Раздел_0_Индексы_под загрузку_13.02.2024.xlsx", 71, 209, "Лист1"),
+    "март_2024": ("Раздел_0_Индексы_под загрузку_18.03.2024.xlsx", 71, 210, "Лист1"),
+    "апрель_2024": ("Раздел_0_Индексы_под загрузку_18.04.2024.xlsx", 72, 211, "Лист1"),
 }
 
-monitoring_data_place["transport_src_file"] = create_abspath_file(
-        monitoring_data_place["data_path"], monitoring_data_place["transport_file_name"])
+monitoring_timeline = {
+    "январь_2024":  (
+        "1_Глава_1_раздел0_тарифы_ для Доп_71_01-2024 - данные 2024-01-19.xlsx", 71, 208,
+        "Отчет мониторинга для 01-2024"
+        ),
+    "февраль_2024": ("2_Отчет январь 2024.xlsx", 71, 209, "приложение А"),
+    "март_2024":    ("3_Отчет февраль 2024.xlsx", 71, 210, "приложение А"),
+    "апрель_2024":  ("4_Отчет март+апрель 2024_2024-04-11.xlsx", 72, 211,"приложение А",),
+}
+#
+# мониторинг транспорта
+#
+src_transport_data = {x: {} for x in transport_timeline.keys()}
 
-monitoring_data_place["transport_results_file"] = create_abspath_file(
-        monitoring_data_place["unload_path"], monitoring_data_place["transport_result_file_name"])
+for data in src_transport_data.keys():
+    src_transport_data[data]["file_name"] = transport_timeline[data][0]
+    src_transport_data[data]["supplement"] = transport_timeline[data][1]
+    src_transport_data[data]["index"] = transport_timeline[data][2]
+    src_transport_data[data]["sheet_name"] = transport_timeline[data][3]
+    src_transport_data[data]["file"] = create_abspath_file(
+        src_transport_path, src_transport_data[data]["file_name"]
+    )
+    src_transport_data[data]["result_file_name"] = r"transport_monitoring_result.csv"
+    src_transport_data[data]["result_file_gen"] = generate_result_file_name(
+        src_transport_data[data]["result_file_name"],
+        src_transport_data[data]["supplement"],
+        src_transport_data[data]["index"],
+    )
+    src_transport_data[data]["result_file"] = create_abspath_file(
+        unload_path, src_transport_data[data]["result_file_gen"]
+    )
+#
+# мониторинг материалов
+#
+src_material_data = {x: {} for x in monitoring_timeline.keys()}
 
-monitoring_data_place["transport_results_file"] = generate_result_file_name(
-    monitoring_data_place["transport_results_file"],
-    monitoring_data_place["transport_supplement"],
-    monitoring_data_place["transport_index"]
-)
+for data in src_material_data.keys():
+    src_material_data[data]["file_name"] = monitoring_timeline[data][0]
+    src_material_data[data]["supplement"] = monitoring_timeline[data][1]
+    src_material_data[data]["index"] = monitoring_timeline[data][2]
+    src_material_data[data]["sheet_name"] = monitoring_timeline[data][3]
+    src_material_data[data]["file"] = create_abspath_file(
+        src_material_path, src_material_data[data]["file_name"]
+    )
+    src_material_data[data]["result_file_name"] = r"materials_monitoring_result.csv"
+    src_material_data[data]["result_file_gen"] = generate_result_file_name(
+        src_material_data[data]["result_file_name"],
+        src_material_data[data]["supplement"],
+        src_material_data[data]["index"],
+    )
+    src_material_data[data]["result_file"] = create_abspath_file(
+        unload_path, src_material_data[data]["result_file_gen"]
+    )
 
 
-monitoring_data_place["materials_src_file"] = create_abspath_file(
-    monitoring_data_place["data_path"],
-    monitoring_data_place["materials_file_name"]
-)
 
-monitoring_data_place["material_results_file"] = create_abspath_file(
-    monitoring_data_place["unload_path"],
-    monitoring_data_place["materials_result_file_name"],
-)
 
-monitoring_data_place["material_results_file"] = generate_result_file_name(
-    monitoring_data_place["material_results_file"],
-    monitoring_data_place["materials_supplement"],
-    monitoring_data_place["materials_index"],
-)
+monitoring_data_place = {
+    "transport": src_transport_data,
+    "materials": src_material_data,
+}
+
 
 
 if __name__ == "__main__":

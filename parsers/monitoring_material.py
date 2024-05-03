@@ -17,7 +17,7 @@ from public import clear_code, is_quote_code, get_float, clear_string
 def get_df_material_monitoring(excel_file: str, sheet_name: str) -> list[tuple[str, float]] | None:
     """
     Получить данные из файла мониторинга.
-    Возвращает список кортежей (шифр, 'отпускная цена поставщика')
+    Возвращает список кортежей (шифр, 'отпускная цена поставщика', 'описание материала')
     Находит якорную колонку. Высчитывает столбец в котором записаны цены поставщика.
     Высчитывает строку с которой будет искать шифры расценок.
     Считывает шифр расценки и цену поставщика.
@@ -64,10 +64,12 @@ def get_df_material_monitoring(excel_file: str, sheet_name: str) -> list[tuple[s
 
 def monitoring_materials_parse(data_place: dict[str:str]) -> int | None:
     """ Разбирает файл мониторинга с ценами на материалы, записывает результат в scv файл. """
-    src_file = data_place["materials_src_file"]
-    result_csv_file = data_place["material_results_file"]
+
+    src_file = data_place["file"]
+    result_csv_file = data_place["result_file"]
+    sheet_name = data_place["sheet_name"]
     #
-    result = get_df_material_monitoring(src_file, data_place["materials_sheet_name"])
+    result = get_df_material_monitoring(src_file, sheet_name)
     df = pandas.DataFrame(
         result, columns=["code", "supplier_price", "delivery", "title"]
     )
