@@ -12,6 +12,18 @@ if __name__ == "__main__":
     # ic(config["materials"].keys())
 
     #
+    # history_time = [
+    #     "январь_2024",
+    #     "февраль_2024",
+    #     "март_2024",
+    #     "апрель_2024",
+    #     "май_2024",
+    # ]
+    # for data in history_time[-1:]:
+    #     src_data = config['transport'][data]
+    #     ic(src_data)
+    #     monitoring_transport_costs_parse(src_data)
+
     history_time = [
         "январь_2024",
         "февраль_2024",
@@ -19,14 +31,8 @@ if __name__ == "__main__":
         "апрель_2024",
         "май_2024",
     ]
+    print(history_time[-1:])
     for data in history_time[-1:]:
-        src_data = config['transport'][data]
+        src_data = config["materials"][data]
         ic(src_data)
-        monitoring_transport_costs_parse(src_data)
-
-    # history_time = ["январь_2024", "февраль_2024", "март_2024", "апрель_2024",]
-    # # print(history_time[3:])
-    # for data in history_time[3:]:
-    #     src_data = config["materials"][data]
-    #     ic(src_data)
-    #     monitoring_materials_parse(src_data)
+        monitoring_materials_parse(src_data)
